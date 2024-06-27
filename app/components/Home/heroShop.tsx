@@ -1,4 +1,15 @@
 import React from "react";
+import { CgGhostCharacter, CgHomeAlt } from "react-icons/cg";
+import { TbBackground, TbMusic } from "react-icons/tb";
+import { RiFontSize } from "react-icons/ri";
+
+const shopCategory = [
+  { image: CgGhostCharacter, name: "Minime" },
+  { image: CgHomeAlt, name: "Miniroom" },
+  { image: TbBackground, name: "Skin" },
+  // { image: TbMusic, name: 'Music' },
+  { image: RiFontSize, name: "Font" },
+];
 
 export default function HeroShop() {
   return (
@@ -10,7 +21,7 @@ export default function HeroShop() {
           {/* <div className='mt-2 text-sm text-center'>Brand-new items</div> */}
         </div>
         <div className="grid items-center justify-center w-full grid-cols-2 gap-8 md:grid-cols-4 ">
-          {/* {shopCategory.map((category, index) => {
+          {shopCategory.map((category, index) => {
             const IconComponent = category.image;
             return (
               <div
@@ -26,7 +37,7 @@ export default function HeroShop() {
                 <p className="">{category.name.toUpperCase()}</p>
               </div>
             );
-          })} */}
+          })}
         </div>
         {/* <div className='flex items-center justify-center w-full'>
       <Buttons
