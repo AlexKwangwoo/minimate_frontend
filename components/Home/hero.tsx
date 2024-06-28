@@ -1,4 +1,7 @@
 import React from "react";
+import Buttons from "../button";
+import { FaArrowRight } from "react-icons/fa6";
+import NaviDiv from "../naviButton";
 
 export default function Hero() {
   return (
@@ -13,6 +16,17 @@ export default function Hero() {
             Discover your perfect match, and personalize your own mini room
             haven with a unique name and a brand-new skin!
           </div>
+        </div>
+
+        <div className="flex items-center justify-center w-full my-3 sm:my-8">
+          <NaviDiv
+            url="/login"
+            title="GET START"
+            iconRight={<FaArrowRight />}
+            iconStyles="text-xl font-semibold "
+            containerStyles="flex items-center gap-2 p-3 md:p-4 text-sm sm:text-md border border-2 font-semibold  
+          rounded-xl bg-hightColor border-hightColor text-white shadow-md hover:bg-white hover:text-hightColor"
+          />
         </div>
 
         {/* {!me ? (

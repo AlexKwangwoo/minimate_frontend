@@ -5,11 +5,17 @@ import React from "react";
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   containerStyles: string;
+  iconLeft?: JSX.Element;
+  iconStyles?: string;
+  iconRight?: JSX.Element;
 }
 
 const Buttons = ({
   title,
   containerStyles,
+  iconLeft,
+  iconStyles,
+  iconRight,
   type = "button",
   onClick,
 }: ButtonProps) => {
@@ -20,11 +26,11 @@ const Buttons = ({
       className={`inline-flex items-center ${containerStyles} `}
     >
       {/* ex) iconLeft={<IoMdSettings/>} */}
-      {/* {iconLeft && <div className={`${iconStyles}`}>{iconLeft}</div>} */}
+      {iconLeft && <div className={`${iconStyles}`}>{iconLeft}</div>}
 
       {title}
 
-      {/* {iconRight && <div className={`${iconStyles}`}>{iconRight}</div>} */}
+      {iconRight && <div className={`${iconStyles}`}>{iconRight}</div>}
     </button>
   );
 };

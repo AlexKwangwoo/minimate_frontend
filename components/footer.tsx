@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../../public/assets/logo.png";
+import Logo from "../public/assets/logo.png";
 import Image from "next/image";
 // import { MdHelpOutline } from "react-icons/md";
 // import { animateScroll as scroll } from "react-scroll";

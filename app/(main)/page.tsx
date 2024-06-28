@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Hero from "../components/Home/hero";
-import HeroShop from "../components/Home/heroShop";
+import Hero from "../../components/Home/hero";
+import HeroShop from "../../components/Home/heroShop";
 
 export default function Home() {
   return (
