@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { useFormStatus } from "react-dom";
+import SingleLoader from "./singleLoader";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
@@ -19,6 +21,9 @@ const Buttons = ({
   type = "button",
   onClick,
 }: ButtonProps) => {
+  const { pending } = useFormStatus();
+  console.log("pending", pending);
+
   return (
     <button
       onClick={onClick}
@@ -28,7 +33,11 @@ const Buttons = ({
       {/* ex) iconLeft={<IoMdSettings/>} */}
       {iconLeft && <div className={`${iconStyles}`}>{iconLeft}</div>}
 
-      {title}
+      {pending ? (
+        <SingleLoader loadingSize={22} extraStyle="mb-[-4px]" />
+      ) : (
+        title
+      )}
 
       {iconRight && <div className={`${iconStyles}`}>{iconRight}</div>}
     </button>

@@ -28,7 +28,7 @@ export async function logIn(prevState: any, formData: FormData) {
   const result = await formSchema.spa(data); //SafeParse = spa
   if (!result.success) {
     console.log(result.error.flatten()); //flatten 에러를 이쁘게 만들어줌
-    return result.error.flatten();
+    return { status: "fail", ...result.error.flatten() };
   } else {
     let redirectPath: string | null = null;
     try {
@@ -38,26 +38,32 @@ export async function logIn(prevState: any, formData: FormData) {
       });
 
       console.log("resres", res);
-      if (res.data) {
-        const session = await getSession();
-        // session.id = res.data.user!._id;
-        session.user = res.data.user;
-        await session.save(); //비밀번호와 함친 암호글자로 web 브라우저 cookie에 저장됨!
-        redirectPath = "/";
-      } else {
-      }
+
+      const session = await getSession();
+      // session.id = res.data.user!._id;
+      session.user = res.data.user;
+      await session.save(); //비밀번호와 함친 암호글자로 web 브라우저 cookie에 저장됨!
+      // redirectPath = "/";
+      return {
+        status: "success",
+        fieldErrors: {
+          password: [],
+          email: [],
+        },
+      };
     } catch (e) {
       return {
         // zod가 애러를 보내는 방식의 오브젝트를 만들어서 리턴.. 마치zod가 한것처럼
         // 그래야 인풋이나 에러낼때 반응이 동일하다!
+        status: "fail",
         fieldErrors: {
-          password: ["Wrong password."],
-          email: [],
+          password: ["Wrong email or password"],
+          email: [""],
         },
       };
       console.log("error!!!!", e);
     } finally {
-      redirectPath && redirect(redirectPath);
+      // redirectPath && redirect(redirectPath);
     }
     //  if its passed
   }

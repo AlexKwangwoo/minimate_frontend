@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import { logOut } from "./actions";
+import LogoutButton from "./logoutButton";
 
 // import AddedPoint from "../Modal/AddedPoint";
 // import NoticeModal from "../Modal/NoticeModal";
@@ -71,9 +72,7 @@ const DropdownMenu = ({ me, isOpen, toggleDropdown }: DropdownMenuProps) => {
           </li>
           <hr className="border border-[#eee] my-2" />
           <form action={logOut}>
-            <button className={`${listItemStyle} w-full text-left`}>
-              Log Out
-            </button>
+            <LogoutButton listItemStyle={listItemStyle}></LogoutButton>
           </form>
           {/* {modalOpen && (
             <NoticeModal closeModal={closeModal}>

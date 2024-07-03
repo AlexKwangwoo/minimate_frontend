@@ -3,15 +3,25 @@
 import Buttons from "@/components/button";
 import TextInput from "@/components/textInput";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { logIn } from "./actions";
 import BackgroundImg from "../../../public/assets/pattern.png";
 import Logo from "../../../public/assets/logo-dark.png";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { tostifySuccess } from "@/components/TostifyAlert/TostifyAlert";
 
 export default function Login() {
   const [state, dispatch] = useFormState(logIn, null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router && state !== null && state?.status === "success") {
+      tostifySuccess("Logined Successfully!");
+      router.push("/");
+    }
+  }, [router, state]);
 
   return (
     <div
@@ -20,6 +30,7 @@ export default function Login() {
         backgroundImage: `url('${BackgroundImg.src}')`,
         backgroundSize: "15%",
       }}
+      onClick={() => {}}
     >
       <div className="fixed inset-0 transition-opacity">
         <div className="absolute inset-0 bg-white opacity-60 "></div>
@@ -66,7 +77,7 @@ export default function Login() {
             label="Email Address"
             placeholder="email@example.com"
             required
-            error={state?.fieldErrors.email}
+            error={state?.fieldErrors?.email}
             styles="w-full"
           />
           <TextInput
@@ -75,7 +86,7 @@ export default function Login() {
             label="Password"
             placeholder="Password"
             required
-            error={state?.fieldErrors.password}
+            error={state?.fieldErrors?.password}
             styles="w-full pr-10"
           />
           <Buttons
