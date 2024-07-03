@@ -1,9 +1,15 @@
 import React from "react";
-import Buttons from "../button";
 import { FaArrowRight } from "react-icons/fa6";
 import NaviDiv from "../naviButton";
+import getSession from "@/lib/session";
+import Image from "next/image";
+import MinniFemale from "../../public/assets/minimi2.png";
+import MinniMale from "../../public/assets/minimi1.png";
+import GoToMiniHomeButton from "./goToMiniHomeButton";
 
-export default function Hero() {
+export default async function Hero() {
+  const { user: me } = await getSession();
+  console.log("me", me);
   return (
     <div className="h-[50vh] px-10 sm:px-20 md:px-40 flex items-center">
       <div className="flex flex-col items-center justify-center w-full h-full ">
@@ -18,55 +24,39 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="flex items-center justify-center w-full my-3 sm:my-8">
-          <NaviDiv
-            url="/login"
-            title="GET START"
-            iconRight={<FaArrowRight />}
-            iconStyles="text-xl font-semibold "
-            containerStyles="flex items-center gap-2 p-3 md:p-4 text-sm sm:text-md border border-2 font-semibold  
-          rounded-xl bg-hightColor border-hightColor text-white shadow-md hover:bg-white hover:text-hightColor"
-          />
-        </div>
-
-        {/* {!me ? (
-        <div className="flex items-center justify-center w-full my-3 sm:my-8">
-          <Buttons
-            onClick={() => navigate("/login")}
-            title="GET START"
-            iconRight={<FaArrowRight />}
-            iconStyles="text-xl font-semibold "
-            containerStyles="flex items-center gap-2 p-3 md:p-4 text-sm sm:text-md border border-2 font-semibold  
-          rounded-xl bg-hightColor border-hightColor text-white shadow-md hover:bg-white hover:text-hightColor"
-          />
-        </div>
-      ) : (
-        <>
-          <div className="flex items-center justify-center w-full ">
-            <img
-              src={
-                !me?.minime_img
-                  ? me?.gender === "male"
-                    ? MinniMale
-                    : MinniFemale
-                  : me?.minime_img
-              }
-              alt="Minime"
-              className="w-[20rem] h-[15rem] drop-shadow-xl object-contain"
-            />
-          </div>
-          <div className="flex items-center justify-center w-full my-3 sm:my-4">
-            <Buttons
-              onClick={openPopup}
-              title="Go to MINI HOME"
-              iconLeft={<AiOutlineHome />}
+        {!me ? (
+          <div className="flex items-center justify-center w-full my-3 sm:my-8">
+            <NaviDiv
+              url={"/login"}
+              title="GET START"
+              iconRight={<FaArrowRight />}
               iconStyles="text-xl font-semibold "
-              containerStyles="flex items-center gap-2 p-3 md:p-4 text-sm sm:text-md  border border-2 font-semibold  
-            rounded-xl bg-hightColor border-hightColor text-white shadow-md hover:bg-white hover:text-hightColor"
+              containerStyles="flex items-center gap-2 p-3 md:p-4 text-sm sm:text-md border border-2 font-semibold  
+          rounded-xl bg-hightColor border-hightColor text-white shadow-md hover:bg-white hover:text-hightColor"
             />
           </div>
-        </>
-      )} */}
+        ) : (
+          <>
+            <div className="flex items-center justify-center w-full ">
+              <Image
+                width={20}
+                height={20}
+                src={
+                  !me?.minime_img
+                    ? me?.gender === "male"
+                      ? MinniMale
+                      : MinniFemale
+                    : me?.minime_img
+                }
+                alt="Minime"
+                className="w-[20rem] h-[15rem] drop-shadow-xl object-contain"
+              />
+            </div>
+            <div className="flex items-center justify-center w-full my-3 sm:my-4">
+              <GoToMiniHomeButton me={me} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

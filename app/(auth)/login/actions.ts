@@ -40,7 +40,8 @@ export async function logIn(prevState: any, formData: FormData) {
       console.log("resres", res);
       if (res.data) {
         const session = await getSession();
-        session.id = res.data.user!._id;
+        // session.id = res.data.user!._id;
+        session.user = res.data.user;
         await session.save(); //비밀번호와 함친 암호글자로 web 브라우저 cookie에 저장됨!
         redirectPath = "/";
       } else {

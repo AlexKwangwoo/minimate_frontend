@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import HeaderNav from "./headerNav";
 import HeaderCart from "./headerCart";
+import HeaderDropdownCover from "./headerDropdownCover";
 
 export default function Header() {
   return (
@@ -29,6 +30,12 @@ export default function Header() {
           <HeaderNav />
           <div className="-ml-4">|</div>
           <HeaderCart></HeaderCart>
+
+          <HeaderDropdownCover
+          // navigate={navigate}
+          // dispatch={dispatch}
+          // me={me}
+          />
         </div>
       </div>
 
