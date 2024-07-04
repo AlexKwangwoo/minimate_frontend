@@ -10,7 +10,10 @@ import BackgroundImg from "../../../public/assets/pattern.png";
 import Logo from "../../../public/assets/logo-dark.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { tostifySuccess } from "@/components/TostifyAlert/TostifyAlert";
+import {
+  tostifyError,
+  tostifySuccess,
+} from "@/components/TostifyAlert/TostifyAlert";
 
 export default function Login() {
   const [state, dispatch] = useFormState(logIn, null);
@@ -20,6 +23,8 @@ export default function Login() {
     if (router && state !== null && state?.status === "success") {
       tostifySuccess("Logined Successfully!");
       router.push("/");
+    } else if (router && state !== null && state?.status === "fail") {
+      tostifyError(state.general_error);
     }
   }, [router, state]);
 
@@ -29,6 +34,7 @@ export default function Login() {
       style={{
         backgroundImage: `url('${BackgroundImg.src}')`,
         backgroundSize: "15%",
+        backgroundRepeat: "repeat",
       }}
       onClick={() => {}}
     >
@@ -90,6 +96,7 @@ export default function Login() {
             styles="w-full pr-10"
           />
           <Buttons
+            show_loading
             type="submit"
             containerStyles={`inline-flex justify-center rounded-md bg-[#F37125] mt-6 px-8 py-3 text-base font-medium text-white outline-none`}
             title="Login"
