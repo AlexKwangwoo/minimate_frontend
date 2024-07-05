@@ -35,10 +35,10 @@ const HeaderNav = () => {
         HOME
       </Link>
       <Link
-        href="/shop"
+        href="/shop/all"
         className={`text-xl font-semibold px-2 py-1
           hover:text-hightColor ${
-            pathname === "/shop"
+            pathname.includes("/shop")
               ? "text-hightColor underline underline-offset-8"
               : "transparent"
           }`}
