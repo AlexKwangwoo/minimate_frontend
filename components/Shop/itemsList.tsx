@@ -6,11 +6,15 @@ import SingleLoader from "../singleLoader";
 import { Item_type } from "@/type/general_type";
 import Image from "next/image";
 import { GoPlus } from "react-icons/go";
+import AddToCartBar from "./addToCartBar";
 
-export default function ItemsList() {
+export default function ItemsList({ me }: { me: any }) {
   const { category } = useParams();
   const [itemsLoading, setItemsLoading] = useState(true);
   const [items, setItems] = useState([]);
+  const [cartSidebarOpen, setCartSidebarOpen] = useState(false);
+  const [tempCartItems, setTempCartItems] = useState<any>([]);
+  const [error, setError] = useState<String>("");
 
   const getItem = async (category: string) => {
     try {
@@ -36,6 +40,50 @@ export default function ItemsList() {
       getItem(category);
     }
   }, [category]);
+
+  useEffect(() => {
+    if (cartSidebarOpen) {
+      const storedTempCartItems = localStorage.getItem("tempCartItems")
+        ? JSON.parse(localStorage.getItem("tempCartItems")!)
+        : [];
+      setTempCartItems(storedTempCartItems);
+    }
+  }, [cartSidebarOpen]);
+
+  const handleAddToTempCart = (item: any) => {
+    if (tempCartItems.some((cartItem: any) => cartItem._id === item._id)) {
+      setError("Item is already in the cart");
+    } else {
+      const updatedTempCartItems = [...tempCartItems, item];
+      setTempCartItems(updatedTempCartItems);
+      localStorage.setItem(
+        "tempCartItems",
+        JSON.stringify(updatedTempCartItems)
+      );
+      setError("");
+    }
+    setCartSidebarOpen(true);
+  };
+
+  const handleSaveCart = () => {
+    setCartSidebarOpen(false);
+  };
+
+  const handleCreateCart = () => {
+    const cartData = {
+      user: me._id,
+      shop_items: tempCartItems.map((item: any) => item._id),
+      total_price: tempCartItems.reduce(
+        (total: any, item: any) => total + item.item_price,
+        0
+      ),
+      total_qty: tempCartItems.length,
+    };
+    // dispatch(createCart({ cartData }));
+    setTempCartItems([]);
+    localStorage.removeItem("tempCartItems");
+    setCartSidebarOpen(false);
+  };
 
   return (
     <div className="w-full h-full my-12">
@@ -76,7 +124,7 @@ export default function ItemsList() {
                     </div>
                     <button
                       className="w-full text-[0.8rem] flex items-center justify-center bg-[#f5f5f5] rounded-lg py-2 mt-2 text-black hover:bg-hightColor hover:text-white"
-                      // onClick={() => handleAddToTempCart(item)}
+                      onClick={() => handleAddToTempCart(item)}
                     >
                       <GoPlus className="mr-1" size={15} /> Add to cart
                     </button>
@@ -85,6 +133,18 @@ export default function ItemsList() {
               ))
           )}
         </div>
+      )}
+
+      {cartSidebarOpen && (
+        <AddToCartBar
+          me={me}
+          setTempCartItems={setTempCartItems}
+          tempCartItems={tempCartItems}
+          error={error}
+          handleSaveCart={handleSaveCart}
+          handleCreateCart={handleCreateCart}
+          setCartSidebarOpen={setCartSidebarOpen}
+        />
       )}
     </div>
   );

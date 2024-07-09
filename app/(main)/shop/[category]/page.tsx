@@ -1,4 +1,3 @@
-import React, { Suspense } from "react";
 import { getCategory } from "./actions";
 import { unstable_cache as nextCache, revalidatePath } from "next/cache";
 import { Category_type, General_data_type } from "@/type/general_type";
@@ -7,6 +6,8 @@ import dynamic from "next/dynamic";
 import ItemsListServerTest from "@/components/Shop/itemsListServerTest";
 import ItemsList from "@/components/Shop/itemsList";
 import Link from "next/link";
+import AddToCartBar from "@/components/Shop/addToCartBar";
+import getSession from "@/lib/session";
 
 // const ItemsList = dynamic(() => import("@/components/Shop/itemsList"), {
 //   ssr: false,
@@ -21,6 +22,7 @@ export default async function Shop({
 }) {
   const selectedCategory = params.category;
   const categories = await getCachedCategories();
+  const { user: me } = await getSession();
 
   return (
     <div className="w-full h-full min-h-screen bg-[#fff9e7] flex pb-28 sm:pb-12 pt-12 px-10 sm:px-20 md:px-40">
@@ -67,19 +69,7 @@ export default async function Shop({
           <ItemsList />
         </Suspense> */}
 
-        <ItemsList />
-
-        {/* {cartSidebarOpen && (
-          <AddToCartBar
-            me={me}
-            setTempCartItems={setTempCartItems}
-            tempCartItems={tempCartItems}
-            error={error}
-            handleSaveCart={handleSaveCart}
-            handleCreateCart={handleCreateCart}
-            setCartSidebarOpen={setCartSidebarOpen}
-          />
-        )} */}
+        <ItemsList me={me} />
       </div>
     </div>
   );
