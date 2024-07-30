@@ -5,7 +5,9 @@ import TokenService from "../services/token.service";
 // import store from "../store/store";
 // import { Logout } from "../store/actionCreators/accounts";
 // import { apiRoutes } from "../types/api-routes";
+// const { user: me } = await getSession();
 
+// console.log("neneneee", me);
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
 // create an axios instance
 const API = axios.create({

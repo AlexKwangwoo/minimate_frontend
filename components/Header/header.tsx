@@ -5,6 +5,7 @@ import Link from "next/link";
 import HeaderNav from "./headerNav";
 import HeaderCart from "./headerCart";
 import HeaderDropdownCover from "./headerDropdownCover";
+import HeaderCartWrapper from "./headerCartWrapper";
 
 export default function Header() {
   return (
@@ -29,8 +30,8 @@ export default function Header() {
         <div className="items-center hidden gap-4 text-xl md:flex md:text-2xl">
           <HeaderNav />
           <div className="-ml-4">|</div>
-          <HeaderCart></HeaderCart>
 
+          <HeaderCartWrapper />
           <HeaderDropdownCover
           // navigate={navigate}
           // dispatch={dispatch}

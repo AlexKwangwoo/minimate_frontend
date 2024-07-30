@@ -1,4 +1,8 @@
+import { revalidateCartList } from "@/app/(main)/cart/actions";
+import { createCart, updateCart } from "@/app/(main)/cart/client_actions";
 import API from "@/app/utils/request";
+import { Cart_type, Shop_item_type } from "@/type/general_type";
+import { revalidateTag } from "next/cache";
 import React, { useEffect, useState } from "react";
 // import {
 //   fetchAllCartsByUser,
@@ -16,15 +20,25 @@ const AddToCartBar = ({
   handleCreateCart,
   setCartSidebarOpen,
   me,
+}: {
+  setTempCartItems: (a: any) => void;
+  tempCartItems: any;
+  error: string;
+  handleSaveCart: () => void;
+  handleCreateCart: () => void;
+  setCartSidebarOpen: (a: any) => void;
+  me: any;
 }) => {
   // const dispatch = useDispatch();
   // const { item, list, loading } = useSelector((state) => state.cart);
   // const [cartItems, setCartItems] = useState(item.shop_items || []);
   const [selectedCart, setSelectedCart] = useState("");
-  const [selectedCartItems, setSelectedCartItems] = useState([]);
+  const [selectedCartItems, setSelectedCartItems] = useState<Shop_item_type[]>(
+    []
+  );
   // const [localCartItems, setLocalCartItems] = useState(tempCartItems || []);
   const [warning, setWarning] = useState("");
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<Cart_type[]>([]);
 
   // useEffect(() => {
   //   if (me) {
@@ -36,25 +50,26 @@ const AddToCartBar = ({
     let res = await API.get("/carts", { params: { user: me._id } });
     console.log("res", res);
     console.log("user: me.userId ", me);
+    setList(res.data);
   };
   useEffect(() => {
     getUserCarts();
-  }, []);
+  }, [me._id]);
 
-  // useEffect(() => {
-  //   if (list.length > 0 && selectedCart) {
-  //     const cart = list.find((cart: any) => cart._id === selectedCart);
-  //     if (cart) {
-  //       setSelectedCartItems(cart.shop_items || []);
-  //     }
-  //   }
-  // }, [selectedCart, list]);
+  useEffect(() => {
+    if (list.length > 0 && selectedCart) {
+      const cart = list.find((cart: Cart_type) => cart._id === selectedCart);
+      if (cart && cart.shop_items) {
+        setSelectedCartItems(cart.shop_items);
+      }
+    }
+  }, [selectedCart, list]);
 
   useEffect(() => {
     localStorage.setItem("tempCartItems", JSON.stringify(tempCartItems));
   }, [tempCartItems]);
 
-  const handleRemoveItem = (index) => {
+  const handleRemoveItem = (index: number) => {
     const updatedCartItems = tempCartItems?.filter((_, i) => i !== index);
     setTempCartItems(updatedCartItems);
     localStorage.setItem("tempCartItems", JSON.stringify(updatedCartItems));
@@ -66,38 +81,53 @@ const AddToCartBar = ({
     setWarning("");
   };
 
-  // const handleCreateOrUpdateCart = () => {
-  //   const existingItemIds = selectedCartItems.map((item) => item._id);
-  //   const newItems = tempCartItems.filter((item) => !existingItemIds.includes(item._id));
+  const handleCreateOrUpdateCart = async () => {
+    const existingItemIds = selectedCartItems.map((item: any) => item._id);
+    const newItems = tempCartItems.filter(
+      (item: any) => !existingItemIds.includes(item._id)
+    );
 
-  //   if (newItems.length !== tempCartItems.length) {
-  //     setWarning("Some items are already in your cart");
-  //     return;
-  //   }
+    if (newItems.length !== tempCartItems.length) {
+      setWarning("Some items are already in your cart");
+      return;
+    }
 
-  //   if (selectedCart === "new") {
-  //     const cartData = {
-  //       user: me._id,
-  //       shop_items: tempCartItems.map((item) => item._id),
-  //       total_price: tempCartItems.reduce((total, item) => total + item.item_price, 0),
-  //       total_qty: tempCartItems.length,
-  //     };
-  //     dispatch(createCart({ cartData }));
-  //   } else {
-  //     const updatedCart = {
-  //       shop_items: [...selectedCartItems, ...tempCartItems].map((item) => item._id),
-  //       total_price:
-  //         selectedCartItems.reduce((total, item) => total + item.item_price, 0) +
-  //         tempCartItems.reduce((total, item) => total + item.item_price, 0),
-  //       total_qty: selectedCartItems.length + tempCartItems.length,
-  //     };
-  //     dispatch(updateCart({ cartId: selectedCart, cartData: updatedCart }));
-  //   }
-  //   localStorage.removeItem("tempCartItems");
-  //   setTempCartItems([]);
-  //   setSelectedCartItems([]);
-  //   setCartSidebarOpen(false);
-  // };
+    if (selectedCart === "new") {
+      const cartData = {
+        user: me._id,
+        shop_items: tempCartItems.map((item: any) => item._id),
+        total_price: tempCartItems.reduce(
+          (total: number, item: any) => total + item.item_price,
+          0
+        ),
+        total_qty: tempCartItems.length,
+      };
+      await createCart({ cartData });
+    } else {
+      const updatedCart = {
+        shop_items: [...selectedCartItems, ...tempCartItems].map(
+          (item) => item._id
+        ),
+        total_price:
+          selectedCartItems.reduce(
+            (total: number, item: any) => total + item.item_price,
+            0
+          ) +
+          tempCartItems.reduce(
+            (total: number, item: any) => total + item.item_price,
+            0
+          ),
+        total_qty: selectedCartItems.length + tempCartItems.length,
+      };
+      await updateCart({ cartId: selectedCart, cartData: updatedCart });
+    }
+    localStorage.removeItem("tempCartItems");
+    setTempCartItems([]);
+    setSelectedCartItems([]);
+    setCartSidebarOpen(false);
+    revalidateCartList();
+  };
+
   // const handleCreateOrUpdateCart = () => {
   //   const existingItemIds = selectedCartItems.map((item) => item._id);
   //   const newItems = tempCartItems.filter(
@@ -158,7 +188,7 @@ const AddToCartBar = ({
               <div className="text-center">Your cart is empty</div>
             ) : (
               <>
-                {tempCartItems.map((item, index) => (
+                {tempCartItems.map((item: any, index: number) => (
                   <div
                     key={index}
                     className="flex items-center justify-between my-4 h-fit"
@@ -192,7 +222,7 @@ const AddToCartBar = ({
             >
               <option value="">Select cart</option>
               <option value="new">New Cart</option>
-              {list.map((cart, index) => (
+              {list.map((cart: Cart_type, index) => (
                 <option key={cart._id} value={cart._id}>
                   cart {index + 1}
                 </option>

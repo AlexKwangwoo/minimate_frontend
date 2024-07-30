@@ -5,19 +5,17 @@ import { TbShoppingCart } from "react-icons/tb";
 import { usePathname } from "next/navigation";
 import NoticeModal from "../Modal/noticeModal";
 import LoginNotice from "../Modal/loginNotice";
+import { useRouter } from "next/navigation";
 
-export default function HeaderCart() {
+export default function HeaderCart({ me }: { me: any }) {
   const pathname = usePathname();
   const [modalOpen, setModalOpen] = useState(false);
-
-  console.log("modalOpen", modalOpen);
+  const router = useRouter();
 
   return (
     <button
       onClick={() => {
-        // !me ?
-        // openModal() : navigate("/cart");
-        setModalOpen(true);
+        !me ? setModalOpen(true) : router.push("/cart");
       }}
       className={`hover:text-hightColor ${
         pathname === "/cart"

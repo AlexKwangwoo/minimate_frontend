@@ -3,7 +3,7 @@ import API from "@/app/utils/request";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import SingleLoader from "../singleLoader";
-import { Item_type } from "@/type/general_type";
+import { Cart_type, Item_type } from "@/type/general_type";
 import Image from "next/image";
 import { GoPlus } from "react-icons/go";
 import AddToCartBar from "./addToCartBar";
@@ -13,8 +13,8 @@ export default function ItemsList({ me }: { me: any }) {
   const [itemsLoading, setItemsLoading] = useState(true);
   const [items, setItems] = useState([]);
   const [cartSidebarOpen, setCartSidebarOpen] = useState(false);
-  const [tempCartItems, setTempCartItems] = useState<any>([]);
-  const [error, setError] = useState<String>("");
+  const [tempCartItems, setTempCartItems] = useState<Cart_type[]>([]);
+  const [error, setError] = useState<string>("");
 
   const getItem = async (category: string) => {
     try {

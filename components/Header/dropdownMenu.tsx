@@ -36,7 +36,7 @@ const DropdownMenu = ({ me, isOpen, toggleDropdown }: DropdownMenuProps) => {
 
   return (
     isOpen && (
-      <div className="absolute right-0 py-2 text-sm bg-white rounded-md shadow-md top-8">
+      <div className="absolute right-0 py-2 text-sm bg-white rounded-md shadow-md top-8 z-20">
         <ul className="w-[150px]">
           <li
             className={listItemStyle}
