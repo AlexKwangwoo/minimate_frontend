@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { TbShoppingCart } from "react-icons/tb";
 import { usePathname } from "next/navigation";
-import NoticeModal from "../Modal/noticeModal";
+import NoticeModal from "../Modal/NoticeModal/noticeModal";
 import LoginNotice from "../Modal/loginNotice";
 import { useRouter } from "next/navigation";
 

@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 import SingleLoader from "./singleLoader";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  outside_loading?: boolean;
   show_loading?: boolean;
   title: string;
   containerStyles: string;
@@ -14,6 +15,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Buttons = ({
+  outside_loading = false,
   show_loading = false,
   title,
   containerStyles,
@@ -35,8 +37,8 @@ const Buttons = ({
       {/* ex) iconLeft={<IoMdSettings/>} */}
       {iconLeft && <div className={`${iconStyles}`}>{iconLeft}</div>}
 
-      {show_loading && pending ? (
-        <SingleLoader loadingSize={22} extraStyle="mb-[-4px]" />
+      {show_loading && (pending || outside_loading) ? (
+        <SingleLoader loadingSize={19} extraStyle="mb-[-4px]" />
       ) : (
         title
       )}

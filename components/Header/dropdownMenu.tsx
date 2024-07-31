@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import { logOut } from "./actions";
 import LogoutButton from "./logoutButton";
+import NoticeModal from "../Modal/NoticeModal/noticeModal";
+import AddedPoint from "../Modal/NoticeModal/addedPoint";
 
 // import AddedPoint from "../Modal/AddedPoint";
 // import NoticeModal from "../Modal/NoticeModal";
@@ -15,7 +17,7 @@ interface DropdownMenuProps {
 }
 
 const DropdownMenu = ({ me, isOpen, toggleDropdown }: DropdownMenuProps) => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const router = useRouter();
 
   const listItemStyle = "hover:bg-[#f5f5f5]  py-2 px-6 cursor-pointer";
@@ -24,14 +26,6 @@ const DropdownMenu = ({ me, isOpen, toggleDropdown }: DropdownMenuProps) => {
     // dispatch(logoutUser());
     router.push("/");
     window.location.reload();
-  };
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
   };
 
   return (
@@ -67,18 +61,22 @@ const DropdownMenu = ({ me, isOpen, toggleDropdown }: DropdownMenuProps) => {
             My History
           </li>
 
-          <li className={listItemStyle} onClick={openModal}>
+          <li className={listItemStyle} onClick={() => setModalOpen(true)}>
             My Point
           </li>
           <hr className="border border-[#eee] my-2" />
           <form action={logOut}>
             <LogoutButton listItemStyle={listItemStyle}></LogoutButton>
           </form>
-          {/* {modalOpen && (
-            <NoticeModal closeModal={closeModal}>
-              <AddedPoint closeModal={closeModal} navigate={navigate} me={me} />
+          {modalOpen && (
+            <NoticeModal setModalOpen={setModalOpen}>
+              <AddedPoint
+                setModalOpen={setModalOpen}
+                // navigate={navigate}
+                me={me}
+              />
             </NoticeModal>
-          )} */}
+          )}
         </ul>
       </div>
     )
