@@ -15,6 +15,7 @@ import {
 } from "@/app/(main)/cart/actions";
 
 import { useFormState } from "react-dom";
+import { revalidateHistoryList } from "@/app/(main)/user/history/actions";
 
 export default function CartList({
   me,
@@ -29,6 +30,7 @@ export default function CartList({
   const [selectedCartItems, setSelectedCartItems] = useState<Shop_item_type[]>(
     []
   );
+  const [loading, setLoading] = useState(false);
   const [selectedItems, setSelectedItems] = useState<any>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [pointAlert, setPointAlert] = useState(false);
@@ -108,6 +110,8 @@ export default function CartList({
   const handleCheckout = async () => {
     if (totalCartItemPrice <= me.point) {
       setPointAlert(false);
+      setLoading(true);
+
       // const selectedCartID = {
       //   cartId: selectedCart,
       // };
@@ -120,10 +124,13 @@ export default function CartList({
           setSelectedCart(null);
           setSelectedItems([]);
           tostifySuccess("Successfully Bought!");
+          revalidateHistoryList();
         }
       } else {
         tostifyError("No selected cart");
       }
+      setLoading(false);
+
       // dispatch(createHistory({ cartId: selectedCartID }));
       // dispatch(createHistory({ cartId: selectedCart }));
       // window.location.reload();
@@ -284,6 +291,7 @@ export default function CartList({
             </div>
             <div className="flex gap-4 my-4">
               <Buttons
+                outside_loading={loading}
                 show_loading
                 // type="submit"
                 containerStyles="text-[0.8rem] px-4 py-2 rounded bg-black text-white"

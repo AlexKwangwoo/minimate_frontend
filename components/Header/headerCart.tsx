@@ -17,9 +17,9 @@ export default function HeaderCart({ me }: { me: any }) {
       onClick={() => {
         !me ? setModalOpen(true) : router.push("/cart");
       }}
-      className={`hover:text-hightColor ${
+      className={`hover:text-hightColor mt-[4px] ${
         pathname === "/cart"
-          ? "text-hightColor underline underline-offset-8"
+          ? "text-hightColor underline underline-offset-8 "
           : "transparent"
       }`}
     >
