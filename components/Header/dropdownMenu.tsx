@@ -36,7 +36,7 @@ const DropdownMenu = ({ me, isOpen, toggleDropdown }: DropdownMenuProps) => {
             className={listItemStyle}
             onClick={() => {
               toggleDropdown(false);
-              router.push("/user/mate");
+              router.push("/user/mate/find");
             }}
           >
             My Mate

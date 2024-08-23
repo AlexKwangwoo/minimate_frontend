@@ -8,7 +8,10 @@ import TokenService from "../services/token.service";
 // const { user: me } = await getSession();
 
 // console.log("neneneee", me);
-const baseURL = process.env.NEXT_PUBLIC_LOCAL_API_URL;
+// NEXT_PUBLIC_API_URL
+// const baseURL = process.env.NEXT_PUBLIC_LOCAL_API_URL;
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
+
 // create an axios instance
 const API = axios.create({
   baseURL: baseURL,

@@ -47,3 +47,36 @@ export interface Cart_type {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Friend_request_type {
+  content: string;
+  createdAt: string;
+  receiver: { _id: string; username: string };
+  receiver_nick_name: string;
+  sender: { _id: string; username: string };
+  sender_nick_name: string;
+  status: string;
+  updatedAt: string;
+  _id: string;
+}
+
+export interface best_friend_type {
+  friend: string;
+  friend_nick_name: string;
+  my_nick_name: string;
+  _id: string;
+}
+
+export interface User_type {
+  best_friends: [best_friend_type];
+  birth: string;
+  domain: string;
+  email: string;
+  gender: string;
+  minime_img: string;
+  passwordChangedAt: string;
+  phone_number: string;
+  point: number;
+  username: string;
+  _id: string;
+}
