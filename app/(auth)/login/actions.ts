@@ -56,7 +56,7 @@ export async function logIn(prevState: any, formData: FormData) {
         general_error: null,
       };
     } catch (e: any) {
-      console.log("eee", e.response.data);
+      console.log("eee", e);
       return {
         // zod가 애러를 보내는 방식의 오브젝트를 만들어서 리턴.. 마치zod가 한것처럼
         // 그래야 인풋이나 에러낼때 반응이 동일하다!
@@ -65,7 +65,7 @@ export async function logIn(prevState: any, formData: FormData) {
           password: [],
           email: [],
         },
-        general_error: e.response.data.message,
+        general_error: e,
       };
       console.log("error!!!!", e);
     } finally {
