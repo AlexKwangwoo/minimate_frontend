@@ -39,7 +39,7 @@ const HeaderDropdown = ({
     };
   }, [dropdownOpen]);
 
-  console.log("meme", me);
+  // console.log("meme", me);
   return (
     <div ref={dropdownRef}>
       {!me ? (

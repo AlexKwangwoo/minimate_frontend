@@ -2,17 +2,15 @@
 
 import { z } from "zod";
 import API from "../../utils/request";
-import { redirect } from "next/navigation";
 import getSession from "@/lib/session";
-import { revalidateTag } from "next/cache";
 
 const formSchema = z.object({
   email: z.string().email().toLowerCase(),
-  // .refine(checkEmailExists, "An account with this email does not exist."),
-  password: z.string({
-    required_error: "Password is required",
-  }),
-  // .min(PASSWORD_MIN_LENGTH),
+  password: z
+    .string({
+      required_error: "Password is required",
+    })
+    .min(8),
   // .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
 });
 
@@ -38,10 +36,7 @@ export async function logIn(prevState: any, formData: FormData) {
         password: result.data.password,
       });
 
-      console.log("resres", res);
-
       const session = await getSession();
-      // session.id = res.data.user!._id;
       session.user = res.data.user;
       session.token = res.data.token;
 
@@ -56,21 +51,19 @@ export async function logIn(prevState: any, formData: FormData) {
         general_error: null,
       };
     } catch (e: any) {
-      console.log("eee", e);
+      console.log("eee", e.response);
       return {
         // zod가 애러를 보내는 방식의 오브젝트를 만들어서 리턴.. 마치zod가 한것처럼
         // 그래야 인풋이나 에러낼때 반응이 동일하다!
-        status: "fail",
+        status: e.response.data.status,
         fieldErrors: {
           password: [],
           email: [],
         },
-        general_error: e,
+        general_error: e.response.data.message,
       };
-      console.log("error!!!!", e);
     } finally {
       // redirectPath && redirect(redirectPath);
     }
-    //  if its passed
   }
 }

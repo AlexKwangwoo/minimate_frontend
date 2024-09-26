@@ -5,19 +5,46 @@ import API from "../../utils/request";
 import { redirect } from "next/navigation";
 import getSession from "@/lib/session";
 
+const checkNameExists = async (username: string) => {
+  try {
+    const user = await API.get<any>(`/users?username=${username}`);
+    if (user.data.length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  } catch (e: any) {
+    console.log("eeeee checkNameExists", e);
+    return true;
+  } finally {
+    // redirectPath && redirect(redirectPath);
+  }
+};
+
 const formSchema = z.object({
-  email: z.string().email().toLowerCase(),
-  username: z.string().toLowerCase(),
+  email: z.string().email().toLowerCase(), //email은  백앤드에서 검사해보겠음!
+
+  username: z
+    .string()
+    .toLowerCase()
+    .refine(checkNameExists, {
+      message: "An account with this username exist.",
+      path: ["username"],
+    }),
+
   birth: z.string(),
-  phone_number: z.string().toLowerCase(),
+  phone_number: z.string().toLowerCase().length(10),
   gender: z.enum(["male", "female"]),
-  // .refine(checkEmailExists, "An account with this email does not exist."),
-  password: z.string({
-    required_error: "Password is required",
-  }),
-  passwordConfirm: z.string({
-    required_error: "Password Confirm is required",
-  }),
+  password: z
+    .string({
+      required_error: "Password is required",
+    })
+    .min(8), // .min(PASSWORD_MIN_LENGTH),,
+  passwordConfirm: z
+    .string({
+      required_error: "Password Confirm is required",
+    })
+    .min(8),
 
   // .min(PASSWORD_MIN_LENGTH),
   // .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
@@ -77,10 +104,12 @@ export async function signUp(prevState: any, formData: FormData) {
         general_error: null,
       };
     } catch (e: any) {
+      console.log("eee", e.response);
+
       return {
         // zod가 애러를 보내는 방식의 오브젝트를 만들어서 리턴.. 마치zod가 한것처럼
         // 그래야 인풋이나 에러낼때 반응이 동일하다!
-        status: "fail",
+        status: e.response.data.status,
         fieldErrors: {
           email: [],
           username: [],

@@ -22,6 +22,7 @@ export default function Register() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log("statestate", state);
     if (router && state !== null && state?.status === "success") {
       tostifySuccess("Signed Up Successfully!");
       router.push("/login");
@@ -140,6 +141,7 @@ export default function Register() {
             label="Phone Number"
             required
             styles="w-full"
+            error={state?.fieldErrors?.phone_number}
           />
           <TextInput
             type="password"
@@ -148,6 +150,7 @@ export default function Register() {
             label="Password"
             required
             styles="w-full"
+            error={state?.fieldErrors?.password}
           />
           <TextInput
             type="password"
@@ -156,6 +159,7 @@ export default function Register() {
             label="Confirm Password"
             required
             styles="w-full"
+            error={state?.fieldErrors?.password}
           />
           <Buttons
             show_loading

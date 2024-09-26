@@ -66,17 +66,6 @@ export default function Login() {
         </p>
 
         <form className=" py-4 flex flex-col gap-5=" action={dispatch}>
-          {/* {errMsg?.message && (
-            <span
-              className={`text-sm ${
-                errMsg?.status == "failed"
-                  ? "text-[#f64949fe]"
-                  : "text-[#2ba150fe]"
-              } mt-0.5`}
-            >
-              {errMsg?.message}
-            </span>
-          )} */}
           <TextInput
             name="email"
             type="email"

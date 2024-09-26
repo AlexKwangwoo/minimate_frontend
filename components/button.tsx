@@ -26,12 +26,12 @@ const Buttons = ({
   onClick,
 }: ButtonProps) => {
   const { pending } = useFormStatus();
-  console.log("pending", pending);
 
   return (
     <button
       onClick={onClick}
       type={type}
+      disabled={pending}
       className={`inline-flex items-center ${containerStyles} `}
     >
       {/* ex) iconLeft={<IoMdSettings/>} */}
