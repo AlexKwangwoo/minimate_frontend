@@ -101,6 +101,7 @@ export async function signUp(prevState: any, formData: FormData) {
           password: [],
           passwordConfirm: [],
         },
+        email: result.data.email,
         general_error: null,
       };
     } catch (e: any) {

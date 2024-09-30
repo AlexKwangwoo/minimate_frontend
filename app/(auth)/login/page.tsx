@@ -9,7 +9,7 @@ import { logIn } from "./actions";
 import BackgroundImg from "../../../public/assets/pattern.png";
 import Logo from "../../../public/assets/logo-dark.png";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   tostifyError,
   tostifySuccess,
@@ -17,6 +17,8 @@ import {
 
 export default function Login() {
   const [state, dispatch] = useFormState(logIn, null);
+  const searchParams = useSearchParams();
+  const createdEmail = searchParams.get("email");
   const router = useRouter();
 
   useEffect(() => {
@@ -72,6 +74,7 @@ export default function Login() {
             label="Email Address"
             placeholder="email@example.com"
             required
+            defaultValue={createdEmail || undefined}
             error={state?.fieldErrors?.email}
             styles="w-full"
           />

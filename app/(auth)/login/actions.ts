@@ -42,6 +42,8 @@ export async function logIn(prevState: any, formData: FormData) {
 
       await session.save(); //비밀번호와 함친 암호글자로 web 브라우저 cookie에 저장됨!
       // redirectPath = "/";
+
+      // redirect("/"); 할수있는데 login success를 보여주고싶어서 useEffect이용해야함
       return {
         status: "success",
         fieldErrors: {

@@ -12,6 +12,11 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string[];
 }
 
+// interface FinalProps extends Omit<Props,"defaultValue">{
+
+//   defaultValue?: string | null;
+// }
+
 const TextInput = React.forwardRef<Ref, Props>(
   ({ styles, label, labelStyles, error, type, ...rest }, ref) => {
     const [showPassword, setShowPassword] = useState(false);

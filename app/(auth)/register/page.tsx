@@ -22,10 +22,9 @@ export default function Register() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("statestate", state);
     if (router && state !== null && state?.status === "success") {
       tostifySuccess("Signed Up Successfully!");
-      router.push("/login");
+      router.push(`/login?email=${state.email}`);
     } else if (router && state !== null && state?.status === "fail") {
       tostifyError(state.general_error);
     }
