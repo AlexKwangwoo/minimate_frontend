@@ -32,7 +32,7 @@ const Buttons = ({
       onClick={onClick}
       type={type}
       disabled={pending}
-      className={`inline-flex items-center ${containerStyles} `}
+      className={`inline-flex items-center ${containerStyles} active:scale-95 transition`}
     >
       {/* ex) iconLeft={<IoMdSettings/>} */}
       {iconLeft && <div className={`${iconStyles}`}>{iconLeft}</div>}

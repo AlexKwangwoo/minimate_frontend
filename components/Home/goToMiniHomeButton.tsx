@@ -55,8 +55,7 @@ export default function GoToMiniHomeButton({ me }: { me: any }) {
         title="Go to MINI HOME"
         iconLeft={<AiOutlineHome />}
         iconStyles="text-xl font-semibold "
-        containerStyles="flex items-center gap-2 p-3 md:p-4 text-sm sm:text-md  border border-2 font-semibold  
-rounded-xl bg-hightColor border-hightColor text-white shadow-md hover:bg-white hover:text-hightColor"
+        containerStyles="flex items-center gap-2 p-3 md:p-4 text-sm sm:text-md  border border-2 font-semibold rounded-xl bg-hightColor border-hightColor text-white shadow-md hover:bg-white hover:text-hightColor"
       />
     </div>
   );

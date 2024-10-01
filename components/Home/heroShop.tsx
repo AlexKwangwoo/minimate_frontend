@@ -28,10 +28,7 @@ export default function HeroShop() {
                 key={index}
                 className="flex flex-col items-center justify-center cursor-pointer "
               >
-                <div
-                  className="w-full h-full p-8 mb-2 rounded-lg bg-[#fff] 
-            flex items-center justify-center shadow-md"
-                >
+                <div className="w-full h-full p-8 mb-2 rounded-lg bg-[#fff] flex items-center justify-center shadow-md">
                   <IconComponent className="w-12 h-12 mx-auto" />
                 </div>
                 <p className="">{category.name.toUpperCase()}</p>
