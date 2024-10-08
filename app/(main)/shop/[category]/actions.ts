@@ -5,7 +5,9 @@ import API from "../../../utils/request";
 
 export async function getCategory() {
   try {
+    console.log("res get category start");
     const res = await API.get("/categories");
+    console.log("res get category result", res);
     return {
       status: "success",
       data: res.data,

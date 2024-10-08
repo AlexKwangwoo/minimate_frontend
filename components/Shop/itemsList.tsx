@@ -1,4 +1,4 @@
-"use client";
+"use client"; //cart 때문에 use client 사용해야하나..?
 import API from "@/app/utils/request";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
