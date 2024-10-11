@@ -19,7 +19,7 @@ const LoginNotice = ({ setModalOpen }: LoginNoticeProps) => {
 
       <div className="w-full flex items-center justify-end">
         <Buttons
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             setModalOpen(false);
           }}

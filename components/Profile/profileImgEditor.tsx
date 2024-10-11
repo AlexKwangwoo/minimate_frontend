@@ -9,7 +9,7 @@ export default function ProfileImgEditor({ me }: { me: any }) {
 
   return (
     <div>
-      <Image
+      {/* <Image
         src={
           // !me?.minime_img
           //   ? me?.gender === "male"
@@ -20,7 +20,7 @@ export default function ProfileImgEditor({ me }: { me: any }) {
         alt="Minime"
         className="w-[15rem] h-[15rem] object-contain cursor-pointer  flex justify-center items-center mx-auto my-4"
         onClick={() => setModalOpen(true)}
-      />
+      /> */}
 
       {modalOpen && (
         <NoticeModal setModalOpen={setModalOpen}>

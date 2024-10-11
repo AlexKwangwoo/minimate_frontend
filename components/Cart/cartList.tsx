@@ -91,7 +91,7 @@ export default function CartList({
     setSelectedItems([]);
   };
 
-  console.log("list", list);
+  // console.log("list", list);
 
   const handleCheckboxChange = (index: number) => {
     if (selectedItems.includes(index)) {

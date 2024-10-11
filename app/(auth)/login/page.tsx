@@ -3,7 +3,7 @@
 import Buttons from "@/components/button";
 import TextInput from "@/components/textInput";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useFormState } from "react-dom";
 import { logIn } from "./actions";
 import BackgroundImg from "../../../public/assets/pattern.png";
@@ -15,7 +15,8 @@ import {
   tostifySuccess,
 } from "@/components/TostifyAlert/TostifyAlert";
 
-export default function Login() {
+//밑의!! LoginFinalView Suspense 는 useSearchParmas 때문에 쓰라고함.. 강제로, 아니면 오류뜸
+function Login() {
   const [state, dispatch] = useFormState(logIn, null);
   const searchParams = useSearchParams();
   const createdEmail = searchParams.get("email");
@@ -106,5 +107,13 @@ export default function Login() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginFinalView() {
+  return (
+    <Suspense>
+      <Login></Login>
+    </Suspense>
   );
 }

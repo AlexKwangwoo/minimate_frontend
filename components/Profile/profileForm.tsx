@@ -57,7 +57,7 @@ const ProfileForm = ({ me }: { me: any }) => {
     console.log("statestate", state);
   }, [state]);
 
-  const handleUserInfoChange = (e) => {
+  const handleUserInfoChange = (e: any) => {
     const { name, value } = e.target;
     setUserInfo({
       ...userInfo,
@@ -65,7 +65,7 @@ const ProfileForm = ({ me }: { me: any }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     // dispatch(updateMe({ userData: userInfo })).then(() => {
     //   if (!error) {
@@ -82,7 +82,7 @@ const ProfileForm = ({ me }: { me: any }) => {
   //   }
   // }, [success, location.pathname, dispatch, me]);
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: any) => {
     const { name, value } = e.target;
     setPasswordData({
       ...passwordData,
@@ -94,7 +94,7 @@ const ProfileForm = ({ me }: { me: any }) => {
     setModalOpen(!modalOpen);
   };
 
-  const handleSubmitPasswordChange = (e) => {
+  const handleSubmitPasswordChange = (e: any) => {
     e.preventDefault();
   };
 

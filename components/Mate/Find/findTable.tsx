@@ -130,7 +130,7 @@ export default function FindTable({
           </table>
         </div>
       )}
-      {newRequestModal && (
+      {/* {newRequestModal && (
         <FriendRequestNoticeModal
           friendId={friendId}
           setModalOpen={() => setNewRequestModal(false)}
@@ -141,7 +141,7 @@ export default function FindTable({
             setModalOpen={() => setNewRequestModal(false)}
           />
         </FriendRequestNoticeModal>
-      )}
+      )} */}
     </div>
   );
 }

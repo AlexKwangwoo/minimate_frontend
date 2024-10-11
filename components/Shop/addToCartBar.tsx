@@ -70,13 +70,15 @@ const AddToCartBar = ({
   }, [tempCartItems]);
 
   const handleRemoveItem = (index: number) => {
-    const updatedCartItems = tempCartItems?.filter((_, i) => i !== index);
+    const updatedCartItems = tempCartItems?.filter(
+      (_: any, i: any) => i !== index
+    );
     setTempCartItems(updatedCartItems);
     localStorage.setItem("tempCartItems", JSON.stringify(updatedCartItems));
     setSelectedCartItems([]);
   };
 
-  const handleSelectCartChange = (e) => {
+  const handleSelectCartChange = (e: any) => {
     setSelectedCart(e.target.value);
     setWarning("");
   };

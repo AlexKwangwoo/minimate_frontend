@@ -29,7 +29,7 @@ export default function ItemsList({ me }: { me: any }) {
       }
 
       setItems(res.data);
-    } catch (e) {
+    } catch (e: any) {
     } finally {
       setItemsLoading(false);
     }
@@ -110,6 +110,7 @@ export default function ItemsList({ me }: { me: any }) {
                 >
                   {item.item_img && (
                     <Image
+                      unoptimized
                       width={100}
                       height={100}
                       src={item.item_img}

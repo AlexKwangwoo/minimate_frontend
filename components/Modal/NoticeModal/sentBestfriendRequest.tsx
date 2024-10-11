@@ -33,12 +33,12 @@ const SentBestfriendRequest = ({
   //   }
   // }, [dispatch,  frined._id]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setRequestData({ ...requestData, [e.target.name]: e.target.value });
   };
   console.log("requestData", requestData);
 
-  const handleRequestSubmit = (e) => {
+  const handleRequestSubmit = (e: any) => {
     e.preventDefault();
     // dispatch(createRequest({ requestData }));
 

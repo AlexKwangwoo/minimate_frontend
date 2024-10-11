@@ -52,7 +52,7 @@ export default async function Mate() {
   // console.log("receive", receive);
   // send.receiver._id.include(me._id) || receive.receiver._id.include(me._id)
   // send.sender._id.include(me._id) || receive.sender._id.include(me._id)
-  // const handleSearchChange = (e) => {
+  // const handleSearchChange = (e:any) => {
   //   setSearchTerm(e.target.value);
   // };
 

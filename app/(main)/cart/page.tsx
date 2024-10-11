@@ -1,22 +1,64 @@
 import React from "react";
-import { unstable_cache as nextCache, revalidatePath } from "next/cache";
-import { getCarts } from "./actions";
+import {
+  unstable_cache as nextCache,
+  revalidatePath,
+  revalidateTag,
+} from "next/cache";
+import { getCarts, getCarts2, getCarts3 } from "./actions";
 import getSession from "@/lib/session";
 import CartList from "@/components/Cart/cartList";
 
-const getCachedCarts = nextCache(getCarts, ["cart"], { tags: ["cart-list"] });
+const getCachedCarts = nextCache(
+  getCarts,
+  ["cart"], //cart는 고유해야함.. key값은 고유해야함!!
+  { tags: ["cart-list1", "haha"] } // tag는 중복되도돔! 여러개가능
+);
 
+// const getCachedCarts2 = nextCache(
+//   getCarts2,
+//   ["cart"], //cart는 고유해야함.. key값은 고유해야함!!,
+//   { tags: ["cart-list2", "haha"] } // tag는 중복되도돔! 여러개가능
+// );
+
+// 함수명이 같으면 처음 nextCache를 initicate 할때는 불러오나 revalidate 할때는 하나의 함수만 불러옴
+// vs
+// 함수명 getCarts / getCarts2(함수 다른 내용) 는 키가 같아도 같은 캐쉬로 생각안함.. 밑에 줄이랑 똑같은 결과임..
+// 함수명은 다르나 내용은 완전 같다면?  처음 nextCache를 initicate 할때는 불러오나 revalidate 할때는 각각 함수를 불러옴!
 export default async function Cart({}) {
   const { user: me } = await getSession();
   const myCarts = await getCachedCarts(me._id).then((result) => result.data);
+  // const myCarts2 = await getCachedCarts2(me._id).then((result) => result.data);
+  // const myCarts3 = await getCachedCarts(me._id).then((result) => result.data);
+  // const myCarts4 = await getCachedCarts2(me._id).then((result) => result.data);
+
+  // console.log("myCarts2", myCarts2);
+  // console.log("myCarts3", myCarts3);
+
+  const revalidate = async () => {
+    "use server";
+    // 정확한 주소를 줘야 revalidate함! /shop 하면 안함
+    // /shop/all 안에있는 모든 데이터를 새로고침함!
+    // revalidatePath("/cart");
+    // revalidateTag("cart-list1");
+    revalidateTag("haha");
+  };
 
   return (
     <div className="flex flex-col w-full h-full px-10 py-16 sm:px-20 md:px-40">
-      <div className="mb-4 text-3xl font-bold">Cart</div>
+      <form action={revalidate}>
+        <button className="mb-4 text-3xl font-bold">Cart</button>
+      </form>
 
       <div className="w-full mt-4">
         <CartList me={me} myCarts={myCarts} />
       </div>
+      {/* 
+      <div className="w-full mt-4">
+        <CartList me={me} myCarts={myCarts2} />
+      </div>
+      <div className="w-full mt-4">
+        <CartList me={me} myCarts={myCarts3} />
+      </div> */}
 
       {/* {!selectedCart ? (
         <div className="my-20 text-center text-[#bbb]">Select your cart</div>
